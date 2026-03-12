@@ -1,0 +1,49 @@
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.add-actor-form {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.actor-input {
+  flex: 1;
+}
+
+.actor-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.actor-chip {
+  font-size: 0.9rem;
+}
+
+.section-loading {
+  margin: 30px auto;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--mat-app-text-color);
+  padding: 1.5rem 1rem;
+  font-size: 0.9rem;
+}

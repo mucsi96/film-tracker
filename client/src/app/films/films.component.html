@@ -1,0 +1,81 @@
+<section class="section-header">
+  <h2>Watched Films</h2>
+  <button mat-flat-button (click)="toggleForm()" class="add-button">
+    <mat-icon>{{ showForm() ? 'close' : 'add' }}</mat-icon>
+    {{ showForm() ? 'Cancel' : 'Add Film' }}
+  </button>
+</section>
+
+@if (showForm()) {
+<mat-card class="form-card">
+  <mat-card-content>
+    <form (ngSubmit)="addFilm()" class="film-form">
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="newFilm.title" name="title" required />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <input matInput type="number" [(ngModel)]="newFilm.year" name="year" required />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Actor 1</mat-label>
+        <input matInput [(ngModel)]="newFilm.actor1" name="actor1" required />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Actor 2</mat-label>
+        <input matInput [(ngModel)]="newFilm.actor2" name="actor2" required />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Score</mat-label>
+        <mat-select [(ngModel)]="newFilm.score" name="score">
+          @for (s of scores; track s) {
+            <mat-option [value]="s">{{ s }}/10</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <button mat-flat-button type="submit" [disabled]="saving()" class="submit-button">
+        @if (saving()) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          Save Film
+        }
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
+}
+
+@if (films.isLoading()) {
+  <mat-spinner class="section-loading" />
+} @else {
+  @if (films.value()?.length === 0) {
+    <p class="empty-state">No films tracked yet. Add your first film above!</p>
+  } @else {
+    <div class="films-grid">
+      @for (film of films.value(); track film.id) {
+        <mat-card class="film-card">
+          <mat-card-content>
+            <div class="film-header">
+              <div>
+                <h3 class="film-title">{{ film.title }}</h3>
+                <span class="film-year">{{ film.year }}</span>
+              </div>
+              <button mat-icon-button (click)="deleteFilm(film.id)" class="delete-button" aria-label="Delete film">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <div class="film-actors">
+              <mat-icon class="actor-icon">person</mat-icon>
+              <span>{{ film.actor1 }}, {{ film.actor2 }}</span>
+            </div>
+            <div class="film-score">
+              <span class="stars">{{ getScoreStars(film.score) }}</span>
+              <span class="score-number">{{ film.score }}/10</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+}

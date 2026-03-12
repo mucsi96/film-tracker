@@ -1,0 +1,44 @@
+<section class="section-header">
+  <h2>Next Film to Watch</h2>
+  <button mat-flat-button (click)="generate()" [disabled]="generating()" class="generate-button">
+    @if (generating()) {
+      <mat-spinner diameter="20"></mat-spinner>
+      Generating...
+    } @else {
+      <mat-icon>auto_awesome</mat-icon>
+      Get AI Suggestion
+    }
+  </button>
+</section>
+
+@if (suggestion.isLoading()) {
+  <mat-spinner class="section-loading" />
+} @else if (suggestion.value()) {
+  <mat-card class="suggestion-card">
+    <mat-card-content>
+      <div class="suggestion-header">
+        <div class="suggestion-icon">
+          <mat-icon>movie</mat-icon>
+        </div>
+        <div class="suggestion-info">
+          <h3 class="suggestion-title">{{ suggestion.value()?.title }}</h3>
+          <span class="suggestion-year">{{ suggestion.value()?.year }}</span>
+        </div>
+        <button mat-icon-button (click)="dismiss()" class="dismiss-button" aria-label="Dismiss suggestion">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="suggestion-reason">
+        <mat-icon class="reason-icon">lightbulb</mat-icon>
+        <p>{{ suggestion.value()?.reason }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+} @else {
+  <mat-card class="empty-suggestion-card">
+    <mat-card-content>
+      <mat-icon class="empty-icon">theaters</mat-icon>
+      <p>Click "Get AI Suggestion" to get a personalized film recommendation based on your watch history and favorite actors.</p>
+    </mat-card-content>
+  </mat-card>
+}

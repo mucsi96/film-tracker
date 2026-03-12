@@ -1,0 +1,34 @@
+<section class="section-header">
+  <h2>Favorite Actors</h2>
+  <button mat-flat-button (click)="toggleInput()" class="add-button">
+    <mat-icon>{{ showInput() ? 'close' : 'person_add' }}</mat-icon>
+    {{ showInput() ? 'Cancel' : 'Add Actor' }}
+  </button>
+</section>
+
+@if (showInput()) {
+<div class="add-actor-form">
+  <mat-form-field class="actor-input">
+    <mat-label>Actor name</mat-label>
+    <input matInput [(ngModel)]="newActorName" (keyup.enter)="addActor()" />
+  </mat-form-field>
+  <button mat-flat-button (click)="addActor()" [disabled]="!newActorName.trim()">Add</button>
+</div>
+}
+
+@if (actors.isLoading()) {
+  <mat-spinner class="section-loading" />
+} @else {
+  @if (actors.value()?.length === 0) {
+    <p class="empty-state">No favorite actors yet. Add actors to improve AI suggestions!</p>
+  } @else {
+    <mat-chip-set class="actor-chips">
+      @for (actor of actors.value(); track actor.id) {
+        <mat-chip (removed)="removeActor(actor.id)" class="actor-chip">
+          {{ actor.name }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      }
+    </mat-chip-set>
+  }
+}

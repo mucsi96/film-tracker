@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS films (
+    id BIGSERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    year INTEGER NOT NULL,
+    actor1 TEXT NOT NULL,
+    actor2 TEXT NOT NULL,
+    score INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS favorite_actors (
+    id BIGSERIAL PRIMARY KEY,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS suggestions (
+    id BIGSERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    year INTEGER NOT NULL,
+    reason TEXT NOT NULL
+);
